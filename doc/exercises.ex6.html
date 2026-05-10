@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Python: module exercises.ex6</title>
+</head><body>
+
+<table class="heading">
+<tr class="heading-text decor">
+<td class="title">&nbsp;<br><strong class="title"><a href="exercises.html" class="white">exercises</a>.ex6</strong></td>
+<td class="extra"><a href=".">index</a><br><a href="file:c%3A%5Cusers%5Carnau%5Conedrive%5Cescriptori%5Cia_bigdata%5Cia%5Cm3%5Ciab_m03_eac6_guerra_arnau%5Csrc%5Cexercises%5Cex6.py">c:\users\arnau\onedrive\escriptori\ia_bigdata\ia\m3\iab_m03_eac6_guerra_arnau\src\exercises\ex6.py</a></td></tr></table>
+    <p><span class="code">Exercici&nbsp;6:&nbsp;resum&nbsp;estadístic&nbsp;1995-2025&nbsp;i&nbsp;capacitat&nbsp;dels&nbsp;estadis.</span></p>
+<p>
+<table class="section">
+<tr class="decor pkg-content-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Modules</strong></td></tr>
+    
+<tr><td class="decor pkg-content-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><table><tr><td class="multicolumn"><a href="pandas.html">pandas</a><br>
+</td><td class="multicolumn"></td><td class="multicolumn"></td><td class="multicolumn"></td></tr></table></td></tr></table><p>
+<table class="section">
+<tr class="decor functions-decor heading-text">
+<td class="section-title" colspan=3>&nbsp;<br><strong class="bigsection">Functions</strong></td></tr>
+    
+<tr><td class="decor functions-decor"><span class="code">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></td><td>&nbsp;</td>
+<td class="singlecolumn"><dl><dt><a name="-add_stadium_capacity"><strong>add_stadium_capacity</strong></a>(resum_1996_2025: pandas.core.frame.DataFrame, stadium_capacity: dict[str, int]) -&gt; pandas.core.frame.DataFrame</dt><dd><span class="code">Afegeix&nbsp;la&nbsp;capacitat&nbsp;de&nbsp;l'estadi&nbsp;de&nbsp;cada&nbsp;equip&nbsp;al&nbsp;dataframe&nbsp;resum.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;resum_1996_2025:&nbsp;DataFrame&nbsp;resum&nbsp;amb&nbsp;estadístiques&nbsp;per&nbsp;equip.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;stadium_capacity:&nbsp;Diccionari&nbsp;amb&nbsp;la&nbsp;capacitat&nbsp;de&nbsp;l'estadi&nbsp;de&nbsp;cada&nbsp;equip.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pd.DataFrame:&nbsp;DataFrame&nbsp;resum&nbsp;amb&nbsp;la&nbsp;columna&nbsp;stadium_capacity.</span></dd></dl>
+ <dl><dt><a name="-fun_resum_1996_2025"><strong>fun_resum_1996_2025</strong></a>(total_points_by_team: pandas.core.series.Series, home_goals_by_team: pandas.core.frame.DataFrame, away_goals_by_team: pandas.core.frame.DataFrame, total_goals_by_team: pandas.core.frame.DataFrame) -&gt; pandas.core.frame.DataFrame</dt><dd><span class="code">Crea&nbsp;el&nbsp;dataframe&nbsp;resum&nbsp;amb&nbsp;punts&nbsp;i&nbsp;gols&nbsp;acumulats&nbsp;per&nbsp;equip.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;total_points_by_team:&nbsp;Series&nbsp;amb&nbsp;els&nbsp;punts&nbsp;totals&nbsp;per&nbsp;equip.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;home_goals_by_team:&nbsp;DataFrame&nbsp;amb&nbsp;els&nbsp;gols&nbsp;locals&nbsp;per&nbsp;equip.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;away_goals_by_team:&nbsp;DataFrame&nbsp;amb&nbsp;els&nbsp;gols&nbsp;visitants&nbsp;per&nbsp;equip.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;total_goals_by_team:&nbsp;DataFrame&nbsp;amb&nbsp;els&nbsp;gols&nbsp;totals&nbsp;per&nbsp;equip.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;pd.DataFrame:&nbsp;DataFrame&nbsp;resum&nbsp;amb&nbsp;punts&nbsp;i&nbsp;gols&nbsp;per&nbsp;equip.</span></dd></dl>
+ <dl><dt><a name="-fun_total_goals"><strong>fun_total_goals</strong></a>(data: pandas.core.frame.DataFrame) -&gt; tuple[int, int, int]</dt><dd><span class="code">Calcula&nbsp;els&nbsp;gols&nbsp;locals,&nbsp;visitants&nbsp;i&nbsp;totals.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;data:&nbsp;DataFrame&nbsp;amb&nbsp;les&nbsp;dades&nbsp;dels&nbsp;partits.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tuple[int,&nbsp;int,&nbsp;int]:&nbsp;Gols&nbsp;locals,&nbsp;gols&nbsp;visitants&nbsp;i&nbsp;gols&nbsp;totals.</span></dd></dl>
+ <dl><dt><a name="-fun_total_goals_by_team"><strong>fun_total_goals_by_team</strong></a>(data: pandas.core.frame.DataFrame) -&gt; tuple[pandas.core.frame.DataFrame, pandas.core.frame.DataFrame, pandas.core.frame.DataFrame]</dt><dd><span class="code">Calcula&nbsp;els&nbsp;gols&nbsp;locals,&nbsp;visitants&nbsp;i&nbsp;totals&nbsp;per&nbsp;cada&nbsp;equip.<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;data:&nbsp;DataFrame&nbsp;amb&nbsp;les&nbsp;dades&nbsp;dels&nbsp;partits.<br>
+&nbsp;<br>
+Returns:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;tuple[pd.DataFrame,&nbsp;pd.DataFrame,&nbsp;pd.DataFrame]:&nbsp;DataFrames&nbsp;amb&nbsp;gols<br>
+&nbsp;&nbsp;&nbsp;&nbsp;locals,&nbsp;visitants&nbsp;i&nbsp;totals&nbsp;per&nbsp;equip.</span></dd></dl>
+</td></tr></table>
+</body></html>
