@@ -1,4 +1,10 @@
-"""Fitxer principal del projecte EAC6."""
+"""
+Punt d’entrada de l’EAC6: crido en ordre les funcions dels exercicis 1–7.
+
+He centralitzat el diccionari de capacitats d’estadi aquí per tenir-lo a mà
+quan el passo a ``add_stadium_capacity``; les gràfiques i models ja inclouen
+el meu nom i la data via ``config`` per identificar les sortides.
+"""
 
 from exercises.ex1 import load_and_eda, plot_home_away_goals
 from exercises.ex2 import total_matches, plot_matches_team_total
@@ -69,7 +75,7 @@ stadium_capacity = {
 
 
 def main() -> None:
-    """Executa seqüencialment tots els exercicis de l'EAC6."""
+    """Orquestro tots els passos: EDA, agregacions, punts, resum, clustering i inferència."""
 
     print("EXERCICI 1")
     data = load_and_eda(config.DATA_PATH)
@@ -93,6 +99,7 @@ def main() -> None:
     print(matches_team_total.head(10))
 
     max_matches = matches_team_total["total_matches"].max()
+    # Els que tenen el màxim de partits els interpreto com els que han estat sempre a primera.
     always_first_division = matches_team_total[
         matches_team_total["total_matches"] == max_matches
     ]
@@ -152,6 +159,7 @@ def main() -> None:
     print(resum_1996_2025.head())
 
     print("\nEXERCICI 7.1 - Model de 3 clústers")
+    # Només filo files amb totes les features numèriques; sense això KMeans rebria NaN.
     resum_model = resum_1996_2025.dropna(
         subset=[
             "points",
@@ -187,6 +195,7 @@ def main() -> None:
     plot_clusters(resum_model_4, "total_goals", "points")
     plot_clusters(resum_model_4, "stadium_capacity", "points")
 
+    # Identifico el clúster amb mitjana de punts més alta i llisto els equips que hi pertanyen.
     cluster_points_mean = (
         resum_model_4.groupby("cluster")["points"]
         .mean()
@@ -208,6 +217,7 @@ def main() -> None:
     print(best_teams[["team", "points", "cluster"]])
 
     print("\nEXERCICI 7.3 - Inferència equip Europa")
+    # Vector en el mateix ordre que selected_columns a ex7: punts, gols local, visitant, total, aforament.
     new_team_cluster = model_4["kmeans"].predict(
         model_4["scaler"].transform(
             [[1150, 650, 440, 1090, 28000]]

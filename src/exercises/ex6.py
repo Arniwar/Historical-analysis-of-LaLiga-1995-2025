@@ -1,18 +1,19 @@
-"""Exercici 6: resum estadístic 1995-2025 i capacitat dels estadis."""
+"""
+Exercici 6: gols totals, gols per equip i taula resum amb merge.
+
+Per als gols globals sumo ``FTHG`` i ``FTAG``. Per equip faig ``groupby`` per
+local i visitant i després combino amb ``add`` i ``fill_value=0``. El resum el
+construeixo amb ``merge`` successius (outer) per incloure tots els equips que
+apareguin en qualsevol taula; omplo NaN amb 0 i converteixo a enters. La
+capacitat de l’estadi la uneixo amb ``map`` des del diccionari que defineixo a
+``main``.
+"""
 
 import pandas as pd
 
 
 def fun_total_goals(data: pd.DataFrame) -> tuple[int, int, int]:
-    """
-    Calcula els gols locals, visitants i totals.
-
-    Args:
-        data: DataFrame amb les dades dels partits.
-
-    Returns:
-        tuple[int, int, int]: Gols locals, gols visitants i gols totals.
-    """
+    """Sumo tots els gols locals, tots els visitants i en faig la suma global."""
     home_goals = int(data["FTHG"].sum())
     away_goals = int(data["FTAG"].sum())
     total_goals = home_goals + away_goals
@@ -24,14 +25,10 @@ def fun_total_goals_by_team(
     data: pd.DataFrame,
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
     """
-    Calcula els gols locals, visitants i totals per cada equip.
+    Calculo gols marcats com a local, encaixats com a visitant i total per equip.
 
-    Args:
-        data: DataFrame amb les dades dels partits.
-
-    Returns:
-        tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]: DataFrames amb gols
-        locals, visitants i totals per equip.
+    Passo per Series indexades per ``team`` per alinear correctament abans de
+    sumar local + visitant.
     """
     home_goals_by_team = (
         data.groupby("HomeTeam")["FTHG"].sum().astype(int).reset_index()
@@ -64,16 +61,10 @@ def fun_resum_1996_2025(
     total_goals_by_team: pd.DataFrame,
 ) -> pd.DataFrame:
     """
-    Crea el dataframe resum amb punts i gols acumulats per equip.
+    Uneixo punts i les tres mètriques de gols en un sol DataFrame per equip.
 
-    Args:
-        total_points_by_team: Series amb els punts totals per equip.
-        home_goals_by_team: DataFrame amb els gols locals per equip.
-        away_goals_by_team: DataFrame amb els gols visitants per equip.
-        total_goals_by_team: DataFrame amb els gols totals per equip.
-
-    Returns:
-        pd.DataFrame: DataFrame resum amb punts i gols per equip.
+    Utilitzo ``how='outer'`` per no perdre equips amb dades només en una de les
+    taules; després normalitzo tipus i ordeno per punts.
     """
     points_df = total_points_by_team.reset_index()
     points_df.columns = ["team", "points"]
@@ -102,14 +93,10 @@ def add_stadium_capacity(
     stadium_capacity: dict[str, int],
 ) -> pd.DataFrame:
     """
-    Afegeix la capacitat de l'estadi de cada equip al dataframe resum.
+    Afegeixo ``stadium_capacity`` alineant per nom d’equip.
 
-    Args:
-        resum_1996_2025: DataFrame resum amb estadístiques per equip.
-        stadium_capacity: Diccionari amb la capacitat de l'estadi de cada equip.
-
-    Returns:
-        pd.DataFrame: DataFrame resum amb la columna stadium_capacity.
+    Els equips sense entrada al diccionari queden amb NaN a aquesta columna;
+    més endavant, a l’exercici 7, faig ``dropna`` abans del clustering.
     """
     resum_1996_2025 = resum_1996_2025.copy()
 

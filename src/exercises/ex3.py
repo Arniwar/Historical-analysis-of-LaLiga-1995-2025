@@ -1,4 +1,11 @@
-"""Exercici 3: distribució de gols locals i visitants."""
+"""
+Exercici 3: distribució de gols (locals i visitants).
+
+Per cada valor possible de gols, compto quantes vegades passa amb
+``value_counts``, ordeno per índex (gols) i preparo dos DataFrames amb les
+columnes ``gols`` i ``num_partits``. Després faig barres paral·leles per
+visualitzar les dues distribucions.
+"""
 
 from pathlib import Path
 
@@ -10,14 +17,10 @@ import config
 
 def goal_distribution(data: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
     """
-    Calcula la distribució de gols dels equips locals i visitants.
+    Obtinc la freqüència de cada marcador local i visitant.
 
-    Args:
-        data: DataFrame amb les dades dels partits.
-
-    Returns:
-        tuple[pd.DataFrame, pd.DataFrame]: DataFrames de distribució de gols
-        locals i visitants.
+    Poso ``gols`` com a índex per facilitar el plotting amb ``plt.bar`` sobre
+    tots els valors enters presents al dataset.
     """
     distr_gols_locals = data["FTHG"].value_counts().sort_index().reset_index()
     distr_gols_locals.columns = ["gols", "num_partits"]
@@ -34,13 +37,7 @@ def plot_goal_ditribution(
     distr_gols_locals: pd.DataFrame,
     distr_gols_visitants: pd.DataFrame,
 ) -> None:
-    """
-    Representa la distribució de gols locals i visitants en dos gràfics.
-
-    Args:
-        distr_gols_locals: DataFrame amb la distribució de gols locals.
-        distr_gols_visitants: DataFrame amb la distribució de gols visitants.
-    """
+    """Dos subplots de barres: un per FTHG i un altre per FTAG."""
     Path(config.IMG_PATH).mkdir(parents=True, exist_ok=True)
 
     plt.figure(figsize=(12, 5))

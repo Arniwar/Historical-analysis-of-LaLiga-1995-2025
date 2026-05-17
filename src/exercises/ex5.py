@@ -1,17 +1,21 @@
-"""Exercici 5: classificació global acumulada 1995-2025."""
+"""
+Exercici 5: punts per partit i classificació acumulada.
+
+Tradueixo ``FTR`` a punts amb dos ``map`` (regles 3-1-0 per local i visitant).
+Després agrupo per equip amb ``groupby`` i sumo; combino local i visitant amb
+``add`` i ``fill_value=0``. El guanyador històric el obtinc amb ``idxmax`` sobre
+la columna de punts.
+"""
 
 import pandas as pd
 
 
 def add_points(data: pd.DataFrame) -> pd.DataFrame:
     """
-    Afegeix els punts aconseguits per l'equip local i visitant en cada partit.
+    Afegeixo ``points_home`` i ``points_away`` segons el resultat.
 
-    Args:
-        data: DataFrame amb les dades dels partits.
-
-    Returns:
-        pd.DataFrame: DataFrame amb les columnes points_home i points_away.
+    Faig ``copy()`` per no mutar el DataFrame original que pugui reutilitzar-se
+    des de ``main``.
     """
     data = data.copy()
 
@@ -36,13 +40,9 @@ def add_points(data: pd.DataFrame) -> pd.DataFrame:
 
 def fun_total_points(data: pd.DataFrame) -> tuple[pd.Series, pd.DataFrame]:
     """
-    Calcula els punts totals acumulats per cada equip.
+    Sumo punts com a local i com a visitant i retorno Series ordenada i DataFrame.
 
-    Args:
-        data: DataFrame amb les columnes points_home i points_away.
-
-    Returns:
-        tuple[pd.Series, pd.DataFrame]: Series i DataFrame amb els punts totals.
+    La Series la mantinc per reutilitzar-la a l’exercici 6 en el merge del resum.
     """
     home_points = data.groupby("HomeTeam")["points_home"].sum()
     away_points = data.groupby("AwayTeam")["points_away"].sum()
@@ -60,15 +60,7 @@ def fun_total_points(data: pd.DataFrame) -> tuple[pd.Series, pd.DataFrame]:
 
 
 def guanyador_historic(df_total_points: pd.DataFrame) -> pd.Series:
-    """
-    Retorna l'equip amb més punts acumulats.
-
-    Args:
-        df_total_points: DataFrame amb les columnes team i points.
-
-    Returns:
-        pd.Series: Fila corresponent a l'equip amb més punts.
-    """
+    """Selecciono la fila de l’equip amb màxim ``points``."""
     winner = df_total_points.loc[df_total_points["points"].idxmax()]
 
     return winner

@@ -52,7 +52,7 @@ Per desactivar el venv més endavant: `deactivate`.
 
 ## Execució del projecte
 
-Cal executar `main.py` des de l’**arrel del repositori** (perquè els camins de `config.py` apuntin a `src/data/...`).
+Els camins del dataset i de les carpetes `img` i `model` es resolen a `config.py` **a partir de la carpeta `src/`** (`Path(__file__)`), de manera que el CSV es troba encara que canviï el directori de treball. Per mantenir el costum del projecte, recomano executar des de l’**arrel del repositori**.
 
 Amb el venv activat:
 
@@ -128,6 +128,20 @@ python -m pytest tests -v
 
 ---
 
+## Referències
+
+- Enunciat i material de l’EAC6 (mòdul Programació d’Intel·ligència Artificial, IAB M03).
+- [Python 3](https://docs.python.org/3/)
+- [Type hints (Real Python)](https://realpython.com/ref/glossary/type-hint/)
+- [Series](https://pandas.pydata.org/docs/reference/api/pandas.Series.html) i [DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html)
+- [Matplotlib](https://matplotlib.org/stable/users/explain/quick_start.html)
+- [scikit-learn](https://scikit-learn.org/stable/) i [preprocessing](https://scikit-learn.org/stable/modules/preprocessing.html)
+- [Pylint](https://pylint.readthedocs.io/)
+- [pytest](https://docs.pytest.org/en/stable/)
+- [pydoc](https://docs.python.org/3/library/pydoc.html)
+
+---
+
 ## Comandes per pujar el projecte a GitHub
 
 1. Creeu un repositori buit a GitHub (sense README si ja en teniu un local).
@@ -139,11 +153,9 @@ git init
 git branch -M main
 git add .
 git commit -m "Primera versió EAC6 LaLiga"
-git remote add origin https://github.com/USUARI/NOM_DEL_REPO.git
+git remote add origin https://github.com/Arniwar/Historical-analysis-of-LaLiga-1995-2025.git
 git push -u origin main
 ```
-
-Substituïu `USUARI` i `NOM_DEL_REPO` pel vostre usuari i nom del repositori. Si GitHub us demana autenticació, utilitzeu un **Personal Access Token** com a contrasenya o configureu **SSH** (`git@github.com:USUARI/NOM_DEL_REPO.git`).
 
 Per a commits posteriors:
 

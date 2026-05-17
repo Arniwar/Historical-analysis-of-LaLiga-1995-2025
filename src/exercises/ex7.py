@@ -1,4 +1,12 @@
-"""Exercici 7: model de clústers amb KMeans."""
+"""
+Exercici 7: clustering amb KMeans sobre el resum per equip.
+
+Escullo les cinc variables numèriques del resum, les escalo amb
+``StandardScaler`` perquè cap domini per escala, i entreno KMeans amb
+``random_state`` fix per poder reproduir resultats. Deso el model en pickle sota
+``model/``. Per visualitzar, pinto cada clúster d’un color i etiqueto cada punt
+amb el nom de l’equip.
+"""
 
 from pathlib import Path
 import pickle
@@ -13,14 +21,10 @@ import config
 
 def model_clusters(df: pd.DataFrame, num_clusters: int) -> dict:
     """
-    Entrena un model KMeans amb les dades resumides dels equips.
+    Entreno KMeans sobre les columnes estandarditzades i deso scaler + model.
 
-    Args:
-        df: DataFrame amb les dades dels equips.
-        num_clusters: Nombre de clústers del model.
-
-    Returns:
-        dict: Diccionari amb scaler, num_clusters i kmeans.
+    Utilitzo ``n_init=10`` (valor explícit recomanat en versions recents de
+    scikit-learn) per evitar avisos de paràmetre per defecte.
     """
     Path(config.MODEL_PATH).mkdir(parents=True, exist_ok=True)
 
@@ -57,16 +61,7 @@ def model_clusters(df: pd.DataFrame, num_clusters: int) -> dict:
 
 
 def assignacio_clusters(df: pd.DataFrame, kmeans: KMeans) -> pd.DataFrame:
-    """
-    Afegeix al dataframe una columna amb el clúster assignat.
-
-    Args:
-        df: DataFrame amb les dades dels equips.
-        kmeans: Model KMeans entrenat.
-
-    Returns:
-        pd.DataFrame: DataFrame amb la columna cluster.
-    """
+    """Copio el dataframe i hi afegeixo ``cluster`` amb les etiquetes del model."""
     df = df.copy()
     df["cluster"] = kmeans.labels_
 
@@ -75,12 +70,10 @@ def assignacio_clusters(df: pd.DataFrame, kmeans: KMeans) -> pd.DataFrame:
 
 def plot_clusters(df: pd.DataFrame, attr1: str, attr2: str) -> None:
     """
-    Genera un gràfic de dispersió dels equips segons dos atributs.
+    Scatter per clúster; per cada punt poso el text del nom de l’equip.
 
-    Args:
-        df: DataFrame amb les dades dels equips i la columna cluster.
-        attr1: Atribut que es mostra a l'eix X.
-        attr2: Atribut que es mostra a l'eix Y.
+    El nom del fitxer inclou nombre de clústers, atributs i el meu identificador
+    per demostrar que la figura és de la meva execució.
     """
     Path(config.IMG_PATH).mkdir(parents=True, exist_ok=True)
 
@@ -124,14 +117,10 @@ def predict_new_team_cluster(
     new_team_data: pd.DataFrame,
 ) -> int:
     """
-    Carrega un model entrenat i prediu el clúster d'un nou equip.
+    Carrego un model desat i prediu el clúster d’una fila nova.
 
-    Args:
-        model_path: Ruta del fitxer pickle del model entrenat.
-        new_team_data: DataFrame amb les dades del nou equip.
-
-    Returns:
-        int: Clúster assignat al nou equip.
+    Aplico el mateix ``scaler`` que a l’entrenament amb ``transform`` (no
+    ``fit_transform``) per coherència dimensional.
     """
     selected_columns = [
         "points",
@@ -153,3 +142,8 @@ def predict_new_team_cluster(
     predicted_cluster = kmeans.predict(x_new_scaled)
 
     return int(predicted_cluster[0])
+
+'''
+Responeu a les següents preguntes: amb 4 clústers, quants equips hi ha en el clúster dels millors? Quins són?
+Hi ha 2 equips, el Barcelona i el Real Madrid
+'''

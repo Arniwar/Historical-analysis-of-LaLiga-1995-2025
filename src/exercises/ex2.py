@@ -1,4 +1,11 @@
-"""Exercici 2: càlcul dels partits totals jugats per equip."""
+"""
+Exercici 2: partits totals jugats per equip.
+
+Compto partits com a local amb ``value_counts`` sobre ``HomeTeam`` i com a
+visitant sobre ``AwayTeam``. Després sumo les dues sèries amb ``add`` i
+``fill_value=0`` per cobrir equips que només apareguin en un rol. Ordeno de
+major a menor i resetejo l’índex per tenir columnes ``team`` i ``total_matches``.
+"""
 
 from pathlib import Path
 
@@ -10,15 +17,10 @@ import config
 
 def total_matches(data: pd.DataFrame) -> pd.DataFrame:
     """
-    Calcula el nombre total de partits jugats per cada equip.
+    Calculo el total de partits per equip (local + visitant).
 
-    Es compten els partits jugats com a local i com a visitant.
-
-    Args:
-        data: DataFrame amb les dades dels partits.
-
-    Returns:
-        pd.DataFrame: DataFrame amb les columnes team i total_matches.
+    ``add`` amb ``fill_value=0`` m’assegura que si un equip no té registres en
+    una de les dues sèries, el comptador no es quedi amb NaN.
     """
     home_matches = data["HomeTeam"].value_counts()
     away_matches = data["AwayTeam"].value_counts()
@@ -37,12 +39,7 @@ def total_matches(data: pd.DataFrame) -> pd.DataFrame:
 
 
 def plot_matches_team_total(matches_team_total: pd.DataFrame) -> None:
-    """
-    Genera un gràfic de barres amb els partits totals jugats per equip.
-
-    Args:
-        matches_team_total: DataFrame amb les columnes team i total_matches.
-    """
+    """Gràfic de barres amb tots els equips; roto les etiquetes 90° per llegibilitat."""
     Path(config.IMG_PATH).mkdir(parents=True, exist_ok=True)
 
     plt.figure(figsize=(16, 7))

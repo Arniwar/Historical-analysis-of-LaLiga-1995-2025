@@ -1,4 +1,11 @@
-"""Exercici 1: càrrega del dataset i anàlisi exploratòria."""
+"""
+Exercici 1: càrrega del dataset i anàlisi exploratòria.
+
+Llegeixo el CSV de partits, elimino les columnes de resultat al descans perquè
+l’enunciat demana treballar només amb dades finals, i genero boxplots per
+comparar visualment FTHG i FTAG. Les figures les deso amb el meu nom i la data
+al nom del fitxer per identificar l’autoria de les sortides.
+"""
 
 from pathlib import Path
 
@@ -10,13 +17,10 @@ import config
 
 def load_and_eda(file_path: str) -> pd.DataFrame:
     """
-    Carrega el dataset de LaLiga i elimina les columnes del descans.
+    Carrego el CSV amb pandas i elimino HTHG, HTAG i HTR.
 
-    Args:
-        file_path: Ruta del fitxer CSV.
-
-    Returns:
-        pd.DataFrame: Dataset sense les columnes HTHG, HTAG i HTR.
+    Utilitzo ``drop`` amb noms de columnes explícits perquè el dataset quedi
+    alineat amb el que demana l’exercici (només anàlisi sobre el resultat final).
     """
     data = pd.read_csv(file_path)
     data = data.drop(columns=["HTHG", "HTAG", "HTR"])
@@ -26,10 +30,10 @@ def load_and_eda(file_path: str) -> pd.DataFrame:
 
 def plot_home_away_goals(data: pd.DataFrame) -> None:
     """
-    Genera una figura amb dos boxplots per comparar els gols locals i visitants.
+    Dibuixo dos boxplots (local i visitant) en una mateixa figura.
 
-    Args:
-        data: DataFrame amb les dades dels partits.
+    Faig ``dropna()`` abans del boxplot per evitar advertències si hi ha valors
+    buits; creo la carpeta ``img`` si encara no existeix.
     """
     Path(config.IMG_PATH).mkdir(parents=True, exist_ok=True)
 

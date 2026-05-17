@@ -1,5 +1,10 @@
-"""Tests for exercise 6."""
-"""Tests de l'exercici 6: funció fun_total_goals."""
+"""
+Tests de l’exercici 6: comprovo ``fun_total_goals`` amb un DataFrame petit.
+
+Afegeixo ``src`` a ``sys.path`` perquè pugui importar ``exercises`` igual que
+quan executo el projecte des de l’arrel; el test el faig amb dades inventades
+per verificar la suma manualment.
+"""
 
 import sys
 from pathlib import Path
@@ -16,8 +21,9 @@ from exercises.ex6 import fun_total_goals  # pylint: disable=wrong-import-positi
 
 def test_fun_total_goals() -> None:
     """
-    Comprova que fun_total_goals calcula correctament els gols locals,
-    visitants i totals.
+    Donat un petit dataframe, els totals han de coincidir amb la suma de FTHG i FTAG.
+
+    Espero (6, 4, 10) perquè sumo locals 2+1+0+3=6 i visitants 1+1+2+0=4.
     """
     data = pd.DataFrame(
         {

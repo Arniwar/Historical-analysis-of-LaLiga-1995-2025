@@ -1,4 +1,10 @@
-"""Exercici 4: partits guanyats a casa, fora i empats."""
+"""
+Exercici 4: resultat final del partit (FTR).
+
+Compto victòries locals (H), visitants (A) i empats (D). Utilitzo ``reindex``
+amb l’ordre [H, A, D] perquè el gràfic i la taula mostrin sempre les tres
+categories encara que alguna tingui zero partits (evito desalineacions).
+"""
 
 from pathlib import Path
 
@@ -10,13 +16,10 @@ import config
 
 def FTR(data: pd.DataFrame) -> pd.DataFrame:
     """
-    Calcula el nombre de victòries locals, visitants i empats.
+    Agrupo per ``FTR`` i reindexo a H, A, D.
 
-    Args:
-        data: DataFrame amb les dades dels partits.
-
-    Returns:
-        pd.DataFrame: DataFrame amb les columnes resultat i num_partits.
+    Així mantinc l’ordre lògic del problema i les etiquetes del gràfic coincideixen
+    amb el significat de cada codi.
     """
     ftr = data["FTR"].value_counts().reindex(["H", "A", "D"]).reset_index()
     ftr.columns = ["resultat", "num_partits"]
@@ -25,12 +28,7 @@ def FTR(data: pd.DataFrame) -> pd.DataFrame:
 
 
 def plot_FTR(ftr: pd.DataFrame) -> None:
-    """
-    Genera un gràfic de barres amb els resultats finals dels partits.
-
-    Args:
-        ftr: DataFrame amb les columnes resultat i num_partits.
-    """
+    """Barres amb etiquetes humanes al eix X (local, visitant, empat)."""
     Path(config.IMG_PATH).mkdir(parents=True, exist_ok=True)
 
     plt.figure(figsize=(7, 5))
